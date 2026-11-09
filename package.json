@@ -1,7 +1,7 @@
 {
   "name": "hollowlight",
   "productName": "Hollowlight",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Hollowlight, a fantasy trading card duel game",
   "main": "main.js",
   "author": "Franco Salvatore",
