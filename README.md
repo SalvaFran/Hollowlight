@@ -22,7 +22,7 @@ F11 or Alt+Enter toggles fullscreen.
 1. Replace `game/index.html` with the new build.
 2. Raise `version` in `package.json` (for example 0.1.0 to 0.2.0).
 3. Commit, then tag and push: `git tag v0.2.0 && git push --tags`.
-4. The "Build desktop release" workflow builds the three installers and attaches them to the release.
+4. The "Build desktop release" workflow builds the three installers and attaches them to the release. Creating the release on GitHub with that tag works too.
 
 ## Run locally
 
