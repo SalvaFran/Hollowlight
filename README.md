@@ -34,3 +34,6 @@ F11 or Alt+Enter toggles fullscreen.
 - Saves live in the app's local storage on each computer. Steam Cloud saves can be added later through Steamworks.
 - The installers are not code-signed yet, so Windows SmartScreen and macOS Gatekeeper will warn on first launch.
 - Steam: upload the built app with SteamPipe once a Steamworks app exists. Steam then handles updates itself.
+
+## Credits
+3D models from Sketchfab (CC-BY 4.0): see the in-game Credits screen. Textures, sky and plants from Poly Haven (CC0).

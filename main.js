@@ -1,7 +1,9 @@
-const {app,BrowserWindow,Menu,shell,dialog}=require('electron'),path=require('path'),{autoUpdater}=require('electron-updater');
+const {app,BrowserWindow,Menu,shell,dialog}=require('electron'),path=require('path'),fs=require('fs'),http=require('http'),{autoUpdater}=require('electron-updater');
+const MT={'.glb':'model/gltf-binary','.jpg':'image/jpeg','.hdr':'application/octet-stream','.png':'image/png','.webp':'image/webp'};let PORT=0;
+const serve=()=>new Promise(r=>{const root=path.join(__dirname,'game','assets'),s=http.createServer((q,res)=>{const f=path.join(root,path.basename(decodeURIComponent(q.url.split('?')[0])));fs.readFile(f,(e,d)=>{if(e){res.writeHead(404);return res.end()}res.writeHead(200,{'Content-Type':MT[path.extname(f)]||'application/octet-stream','Access-Control-Allow-Origin':'*','Cache-Control':'max-age=31536000'});res.end(d)})});s.listen(0,'127.0.0.1',()=>{PORT=s.address().port;r()})});
 app.setName('Hollowlight');Menu.setApplicationMenu(null);let win;
 const make=()=>{win=new BrowserWindow({width:1600,height:950,minWidth:1024,minHeight:640,backgroundColor:'#06050c',title:'Hollowlight',autoHideMenuBar:true,webPreferences:{contextIsolation:true,sandbox:true}});
- win.loadFile(path.join(__dirname,'game','index.html'));
+ win.loadFile(path.join(__dirname,'game','index.html'),{query:{assets:`http://127.0.0.1:${PORT}/`}});
  win.webContents.on('before-input-event',(e,i)=>{if(i.type!='keyDown')return;if(i.key=='F11'||i.alt&&i.key=='Enter')win.setFullScreen(!win.isFullScreen());if(i.key=='F12'&&!app.isPackaged)win.webContents.toggleDevTools()});
  win.webContents.setWindowOpenHandler(({url})=>(shell.openExternal(url),{action:'deny'}))};
 const upd=()=>{autoUpdater.autoDownload=true;autoUpdater.autoInstallOnAppQuit=true;
@@ -9,5 +11,5 @@ const upd=()=>{autoUpdater.autoDownload=true;autoUpdater.autoInstallOnAppQuit=tr
  autoUpdater.on('download-progress',p=>win&&win.setProgressBar(p.percent/100));
  autoUpdater.on('update-downloaded',async i=>{win&&(win.setProgressBar(-1),win.setTitle('Hollowlight'));const r=await dialog.showMessageBox(win,{type:'info',buttons:['Restart and update','Later'],defaultId:0,title:'Update ready',message:`Hollowlight ${i.version} is ready.`,detail:'Restart now to play the new version. If you choose Later, it installs when you close the game.'});r.response==0&&autoUpdater.quitAndInstall(true,true)});
  autoUpdater.on('error',()=>win&&win.setTitle('Hollowlight'));autoUpdater.checkForUpdates().catch(()=>{});setInterval(()=>autoUpdater.checkForUpdates().catch(()=>{}),30*60e3)};
-app.whenReady().then(()=>{make();app.isPackaged&&upd();app.on('activate',()=>BrowserWindow.getAllWindows().length||make())});
+app.whenReady().then(async()=>{await serve();make();app.isPackaged&&upd();app.on('activate',()=>BrowserWindow.getAllWindows().length||make())});
 app.on('window-all-closed',()=>process.platform!='darwin'&&app.quit());
