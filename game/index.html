@@ -4483,7 +4483,7 @@ addEventListener('wheel',ev=>{if(ev.target.id=='wc'&&WS&&!WS.att){WS.zm=Math.max
 
 
 
-const AB=new URLSearchParams(location.search).get('assets')||'assets/',V3={c:{},tx:{}};
+const AB=new URLSearchParams(location.search).get('assets')||(/claude|anthropic|usercontent/.test(location.host)?'https://salvafran.github.io/Hollowlight/assets/':'assets/'),V3={c:{},tx:{}};
 const v3L=()=>V3.L||(V3.L=new THREE.GLTFLoader().setMeshoptDecoder(THREE.MeshoptDecoder));
 const v3get=n=>V3.c[n]||(V3.c[n]=new Promise((res,rej)=>v3L().load(AB+n+'.glb',g=>{V3.done=(V3.done|0)+1;v3prog();res(g)},undefined,rej)));
 const v3tex=(n,rep,srgb)=>{const t=new THREE.TextureLoader().load(AB+n+'.jpg');t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(rep,rep);t.anisotropy=8;srgb&&(t.encoding=THREE.sRGBEncoding);return t};
