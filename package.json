@@ -1,7 +1,7 @@
 {
   "name": "hollowlight",
   "productName": "Hollowlight",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Hollowlight, a fantasy trading card duel game",
   "main": "main.js",
   "author": "Franco Salvatore",
@@ -11,16 +11,51 @@
     "dist": "electron-builder --publish never",
     "release": "electron-builder --publish always"
   },
-  "dependencies": { "electron-updater": "^6.3.9" },
-  "devDependencies": { "electron": "^33.2.1", "electron-builder": "^25.1.8" },
+  "dependencies": {
+    "electron-updater": "^6.3.9"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  },
   "build": {
     "appId": "io.github.salvafran.hollowlight",
     "productName": "Hollowlight",
-    "files": ["main.js", "game/**/*", "package.json"],
-    "publish": [{ "provider": "github", "owner": "SalvaFran", "repo": "Hollowlight", "releaseType": "release" }],
-    "win": { "target": "nsis" },
-    "nsis": { "oneClick": true, "artifactName": "Hollowlight-Setup-${version}.${ext}" },
-    "mac": { "target": ["dmg", "zip"], "category": "public.app-category.card-games" },
-    "linux": { "target": "AppImage", "category": "Game" }
+    "files": [
+      "main.js",
+      "game/**/*",
+      "package.json",
+      "preload.js"
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "SalvaFran",
+        "repo": "Hollowlight",
+        "releaseType": "release"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "artifactName": "Hollowlight-Setup-${version}.${ext}"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.card-games",
+      "icon": "build/icon.png"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Game",
+      "icon": "build/icon.png"
+    },
+    "icon": "build/icon.png"
   }
 }

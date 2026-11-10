@@ -1,0 +1,1 @@
+const {contextBridge,ipcRenderer}=require('electron');contextBridge.exposeInMainWorld('hlUpd',{on:cb=>ipcRenderer.on('upd',(e,m)=>cb(m)),get:()=>ipcRenderer.send('upd-get'),install:()=>ipcRenderer.send('upd-install')});
